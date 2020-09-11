@@ -55,6 +55,7 @@ const config: NuxtConfig = {
     'plugins/displayPreferenceApi.ts',
     'plugins/imageApi.ts',
     'plugins/itemsApi.ts',
+    'plugins/mediaInfoApi.ts',
     'plugins/tvShowsApi.ts',
     'plugins/userApi.ts',
     'plugins/userLibraryApi.ts',
@@ -82,7 +83,7 @@ const config: NuxtConfig = {
     [
       'nuxt-vuex-localstorage',
       {
-        localStorage: ['user']
+        localStorage: ['user', 'deviceProfile']
       }
     ],
     // Doc: https://axios.nuxtjs.org/usage
