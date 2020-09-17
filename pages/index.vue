@@ -1,5 +1,5 @@
 <template>
-  <v-container fluid>
+  <v-container>
     <v-row
       v-for="(homeSection, homeSectionIndex) in homeSections"
       :key="homeSectionIndex"
