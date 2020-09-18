@@ -15,7 +15,11 @@
     >
       <vueper-slide v-for="item in items" :key="item.Id">
         <template v-slot:content>
-          <card :shape="section.shape" :item="item" />
+          <card
+            :shape="section.shape"
+            :item="item"
+            :options="{ subtitle: 'productionYears' }"
+          />
         </template>
       </vueper-slide>
 

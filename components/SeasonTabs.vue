@@ -19,15 +19,7 @@
         >
           <vueper-slide v-for="episode in season.Episodes" :key="episode.Id">
             <template v-slot:content>
-              <v-card>
-                <v-img :src="getImageLink(episode.Id, 'primary')"></v-img>
-                <v-card-subtitle>
-                  {{
-                    $t('episodeNumber', { episodeNumber: episode.IndexNumber })
-                  }}
-                </v-card-subtitle>
-                <v-card-title>{{ episode.Name }}</v-card-title>
-              </v-card>
+              <card :item="episode" :options="{ subtitle: 'episodeNumber' }" />
             </template>
           </vueper-slide>
         </vueper-slides>

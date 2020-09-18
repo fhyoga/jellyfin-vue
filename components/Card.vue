@@ -52,6 +52,13 @@ export default Vue.extend({
       default: () => {
         return false;
       }
+    },
+    options: {
+      type: Object,
+      required: false,
+      default: () => {
+        return {};
+      }
     }
   },
   computed: {
@@ -86,6 +93,8 @@ export default Vue.extend({
           case 'Playlist':
           case 'Video':
             return 'square-card';
+          case 'Episode':
+            return 'thumb-card';
           default:
             return '';
         }
@@ -121,27 +130,42 @@ export default Vue.extend({
       }
     },
     /**
-     * @returns {string} Either an empty string, or a string representing the production year(s) for the current item.
+     * @returns {string} Either an empty string, or a string representing the production year(s) for the current item or the relevant episode number of the item.
      */
     cardSubtitle(): string {
-      if (this.item.Type !== 'Series' && this.item.ProductionYear) {
-        return this.item.ProductionYear;
-      } else if (
-        this.item.Status === 'Continuing' &&
-        this.item.ProductionYear
-      ) {
-        return `${this.item.ProductionYear} - ${this.$t('present')}`;
-      } else if (this.item.ProductionYear && this.item.EndDate) {
-        const endYear = new Date(this.item.EndDate).toLocaleString('en-us', {
-          year: 'numeric'
-        });
-        if (this.item.ProductionYear.toString() === endYear) {
-          return this.item.ProductionYear;
-        }
-        return `${this.item.ProductionYear} - ${endYear}`;
-      } else {
-        return '';
+      switch (this.options.subtitle) {
+        case 'episodeNumber':
+          if (this.item.IndexNumber) {
+            return this.$t('episodeNumber', {
+              episodeNumber: this.item.IndexNumber
+            }).toString();
+          }
+          break;
+        case 'productionYears':
+          if (this.item.Type !== 'Series' && this.item.ProductionYear) {
+            return this.item.ProductionYear;
+          } else if (
+            this.item.Status === 'Continuing' &&
+            this.item.ProductionYear
+          ) {
+            return `${this.item.ProductionYear} - ${this.$t('present')}`;
+          } else if (this.item.ProductionYear && this.item.EndDate) {
+            const endYear = new Date(this.item.EndDate).toLocaleString(
+              'en-us',
+              {
+                year: 'numeric'
+              }
+            );
+            if (this.item.ProductionYear.toString() === endYear) {
+              return this.item.ProductionYear;
+            }
+            return `${this.item.ProductionYear} - ${endYear}`;
+          }
+          break;
+        default:
+          return '';
       }
+      return '';
     }
   },
   methods: {
