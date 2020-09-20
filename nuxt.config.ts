@@ -46,6 +46,7 @@ const config: NuxtConfig = {
     // Components
     'plugins/components/vueperSlides.ts',
     // Utility
+    'plugins/backdropPlugin.ts',
     'plugins/browserDetection.ts',
     'plugins/deviceProfile.ts',
     'plugins/page.ts',

@@ -52,20 +52,25 @@ export default Vue.extend({
       backdropImageSource: ''
     };
   },
-
   async beforeMount() {
-    const Item = (
+    const items = (
       await this.$itemsApi.getItems({
         uId: this.$auth.user.Id,
         userId: this.$auth.user.Id,
         ids: this.$route.params.itemId,
         fields: 'Overview,Genres'
       })
-    ).data.Items as BaseItemDto[];
+    ).data.Items;
 
-    this.item = Item[0];
+    if (items) {
+      this.$backdrop.set(items);
+      this.item = items[0];
+    }
 
     this.updateBackdropImage();
+  },
+  destroyed() {
+    this.$backdrop.clear();
   },
   methods: {
     getAspectRatio() {
